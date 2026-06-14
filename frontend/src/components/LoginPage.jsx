@@ -41,7 +41,7 @@ const LoginPage = ({setCurrentUser, handleAuthe, setBooks, isaDonor, setIsaDonor
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: isDonor ? import.meta.env.VITE_APP_URL+'/donorDashboard' : import.meta.env.VITE_APP_URL+'/receiverDashboard',
+        redirectTo: isDonor ? navigate('/donorDashboard') : navigate('/receiverDashboard'),
         queryParams: {
           prompt: 'consent', // Force account selection on each login
         },
