@@ -10,9 +10,9 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", async (req, res) => {
-  const data = await supabase.from("transactions").select("*");
-  console.log(data);
-  res.send(data);
+  // const data = await supabase.from("transactions").select("*");
+  // console.log(data);
+  res.send("Backend is Active");
 });
 
 app.post("/data", async (req, res, next) => {
