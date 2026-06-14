@@ -17,6 +17,8 @@ const LoginPage = ({setCurrentUser, handleAuthe, setBooks, isaDonor, setIsaDonor
   const [isRegistering, setIsRegistering] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -57,7 +59,7 @@ const LoginPage = ({setCurrentUser, handleAuthe, setBooks, isaDonor, setIsaDonor
   }
 
 
-  const navigate = useNavigate();
+  
 
   
 
