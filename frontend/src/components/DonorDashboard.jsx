@@ -526,20 +526,20 @@ const DonorDashboard = ({ setCurrentUser }) => {
                 <div className="bg-[#16241a] border border-[#2c4430] text-[#bfe6c8] px-4 py-3 rounded-xl relative mb-6">
                   <p className="font-semibold text-[#9fe0b0]">Success!</p>
                   <p className="text-sm mt-0.5">
-                    You added{formData.title}
+                    You added{" "}
                     <strong className="font-semibold text-[#f1ece4]">
-                      "{addedBook?.title}"
+                      "{formData?.title}"
                     </strong>{" "}
                     to your list.
                   </p>
                   <div className="mt-2 text-sm text-[#9fb8a3] space-y-0.5">
                     <p>
                       <span className="text-[#bfe6c8]">Author:</span>{" "}
-                      {addedBook?.author}
+                      {formData?.author}
                     </p>
                     <p>
                       <span className="text-[#bfe6c8]">Subject:</span>{" "}
-                      {addedBook?.subject}
+                      {formData?.subject}
                     </p>
                   </div>
                   <button
