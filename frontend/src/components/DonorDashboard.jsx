@@ -204,76 +204,81 @@ const DonorDashboard = ({ setCurrentUser }) => {
         );
 
         try {
-          const response = await fetch(import.meta.env.VITE_BACKEND_URL+"/data", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
+          const response = await fetch(
+            import.meta.env.VITE_BACKEND_URL + "/data",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                title: formData.title,
+                author: formData.author,
+                subject: formData.subject,
+                academicclass: formData.academicclass,
+                edition: formData.edition,
+                publisher: formData.publisher,
+                description: formData.description,
+                donor_id: formData.donor_id,
+                book_img_url:
+                  import.meta.env.VITE_SUPABASE_URL +
+                  "/storage/v1/object/public/book-covers/" +
+                  datas.data.path,
+              }),
             },
-            body: JSON.stringify({
-              title: formData.title,
-              author: formData.author,
-              subject: formData.subject,
-              academicclass: formData.academicclass,
-              edition: formData.edition,
-              publisher: formData.publisher,
-              description: formData.description,
-              donor_id: formData.donor_id,
-              book_img_url:
-                import.meta.env.VITE_SUPABASE_URL +
-                "/storage/v1/object/public/book-covers/" +
-                datas.data.path,
-            }),
-          });
+          );
 
           console.log(response);
           if (response.ok) {
             setLoading(false);
             setShowSuccessMessage(true);
             // Hide the message after a few seconds
-            setTimeout(() => setShowSuccessMessage(false), 5000);
-
-            // Reset the form
-            setFormData((prev) => ({
-              title: "",
-              author: "",
-              subject: "",
-              academicclass: "",
-              edition: "",
-              publisher: "",
-              description: "",
-              donatoremail: "",
-              donor_id: prev.donor_id,
-            }));
-            setCoverImage(null);
-            setImagePreviewUrl(null);
-            if (fileInputRef.current) {
-              fileInputRef.current.value = "";
-            }
+            setTimeout(() => {
+              setShowSuccessMessage(false);
+              // Reset the form
+              setFormData((prev) => ({
+                title: "",
+                author: "",
+                subject: "",
+                academicclass: "",
+                edition: "",
+                publisher: "",
+                description: "",
+                donatoremail: "",
+                donor_id: prev.donor_id,
+              }));
+              setCoverImage(null);
+              setImagePreviewUrl(null);
+              if (fileInputRef.current) {
+                fileInputRef.current.value = "";
+              }
+            }, 5000);
           } else {
             setLoading(false);
             setFailureReason(
               "Could not save the book details. Please try again.",
             );
             setShowFailureMessage(true);
-            setTimeout(() => setShowFailureMessage(false), 5000);
-
-            // Reset the form
-            setFormData((prev) => ({
-              title: "",
-              author: "",
-              subject: "",
-              academicclass: "",
-              edition: "",
-              publisher: "",
-              description: "",
-              donatoremail: "",
-              donor_id: prev.donor_id,
-            }));
-            setCoverImage(null);
-            setImagePreviewUrl(null);
-            if (fileInputRef.current) {
-              fileInputRef.current.value = "";
-            }
+            setTimeout(() => {
+              setShowFailureMessage(false);
+              // Reset the form
+              setFormData((prev) => ({
+                title: "",
+                author: "",
+                subject: "",
+                academicclass: "",
+                edition: "",
+                publisher: "",
+                description: "",
+                donatoremail: "",
+                donor_id: prev.donor_id,
+              }));
+              setCoverImage(null);
+              setImagePreviewUrl(null);
+              if (fileInputRef.current) {
+                fileInputRef.current.value = "";
+              }
+            }, 5000);
           }
         } catch (error) {
           console.log(error);
@@ -299,7 +304,7 @@ const DonorDashboard = ({ setCurrentUser }) => {
         // console.log(data, error);
 
         // setTimeout(() => {
-        setLoading(false);
+        // setLoading(false);
         // const newBook = {
         //   title: formData.title,
         //   author: formData.author,
@@ -307,27 +312,27 @@ const DonorDashboard = ({ setCurrentUser }) => {
         // };
         // setMyBooks([...myBooks, newBook]); // Add the new book to the list
         // setAddedBook(newBook); // Set the book for the confirmation message
-        setShowSuccessMessage(true);
+        // setShowSuccessMessage(true);
 
-        console.log(formData);
+        // console.log(formData);
 
         // Hide the message after a few seconds
-        setTimeout(() => setShowSuccessMessage(false), 5000);
+        // setTimeout(() => setShowSuccessMessage(false), 5000);
 
         // Reset the form
-        setFormData((prev) => ({
-          title: "",
-          author: "",
-          subject: "",
-          academicclass: "",
-          edition: "",
-          publisher: "",
-          description: "",
-          donatoremail: "",
-          donor_id: prev.donor_id,
-        }));
-        setCoverImage(null);
-        setImagePreviewUrl(null);
+        // setFormData((prev) => ({
+        //   title: "",
+        //   author: "",
+        //   subject: "",
+        //   academicclass: "",
+        //   edition: "",
+        //   publisher: "",
+        //   description: "",
+        //   donatoremail: "",
+        //   donor_id: prev.donor_id,
+        // }));
+        // setCoverImage(null);
+        // setImagePreviewUrl(null);
         // }, 1500);
       }
     }
@@ -352,17 +357,20 @@ const DonorDashboard = ({ setCurrentUser }) => {
     //   .eq("receiver_id", request.receiver_id)
     //   .eq("id", id);
 
-    const response = await fetch(import.meta.env.VITE_BACKEND_URL+"/acceptReq", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
+    const response = await fetch(
+      import.meta.env.VITE_BACKEND_URL + "/acceptReq",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: session?.user?.user_metadata?.email,
+          receiver_id: request.receiver_id,
+          id: id,
+        }),
       },
-      body: JSON.stringify({
-        email: session?.user?.user_metadata?.email,
-        receiver_id: request.receiver_id,
-        id: id
-      })
-    });
+    );
 
     setRequests(
       requests.map((req, index) =>
@@ -385,17 +393,20 @@ const DonorDashboard = ({ setCurrentUser }) => {
     //   .eq("receiver_id", receiver_id)
     //   .eq("id", id);
 
-    const response = await fetch(import.meta.env.VITE_BACKEND_URL+"/declineReq", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
+    const response = await fetch(
+      import.meta.env.VITE_BACKEND_URL + "/declineReq",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: session?.user?.user_metadata?.email,
+          receiver_id: receiver_id,
+          id: id,
+        }),
       },
-      body: JSON.stringify({
-        email: session?.user?.user_metadata?.email,
-        receiver_id: receiver_id,
-        id: id
-      })
-    });
+    );
 
     setRequests(
       requests.map((req, index) =>
